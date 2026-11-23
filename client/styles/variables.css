@@ -1,0 +1,101 @@
+/**
+ * ============================================================================
+ * FREESLOT — DESIGN SYSTEM & CSS VARIABLES (variables.css)
+ * ============================================================================
+ * Role: UI/UX Designer
+ * Purpose: Centralizes all color palettes, typography scales, spacing tokens,
+ *          border radii, and shadows into CSS custom properties.
+ *          Allows the Front-End team to maintain visual consistency and
+ *          update themes from a single file.
+ * ============================================================================
+ */
+
+:root {
+  /* --------------------------------------------------------------------------
+   * 1. BRAND & ACCENT COLORS
+   * High-contrast academic palette: Deep Indigo for structure/focus and
+   * Emerald Mint to visually highlight mutual "Free Slots" at a glance.
+   * -------------------------------------------------------------------------- */
+  --color-primary: #2563eb;          /* Royal Blue - Primary actions & active tabs */
+  --color-primary-hover: #1d4ed8;    /* Darker Blue - Button hover state */
+  --color-primary-light: #eff6ff;    /* Soft Blue Tint - Selected highlights */
+
+  --color-secondary: #0f172a;        /* Deep Slate Navy - Headers & navigation */
+  --color-accent-free: #10b981;      /* Emerald Green - Mutual available free slots */
+  --color-accent-free-bg: #ecfdf5;   /* Soft Mint - Free slot card background */
+  --color-accent-free-border: #6ee7b7;
+
+  /* --------------------------------------------------------------------------
+   * 2. SEMANTIC & TIMETABLE STATUS COLORS
+   * Used to distinguish busy lectures/labs from available periods and warnings.
+   * -------------------------------------------------------------------------- */
+  --color-busy-bg: #fee2e2;          /* Soft Coral Red - Busy/Lecture block fill */
+  --color-busy-border: #fca5a5;      /* Coral Border - Busy block outline */
+  --color-busy-text: #991b1b;        /* Dark Crimson - Readable busy label text */
+
+  --color-meeting-bg: #fef3c7;       /* Warm Amber - Confirmed group meeting */
+  --color-meeting-border: #fcd34d;
+  --color-meeting-text: #92400e;
+
+  --color-danger: #dc2626;           /* Delete / Conflict alert */
+  --color-success: #059669;          /* Confirmation toast / badge */
+
+  /* --------------------------------------------------------------------------
+   * 3. NEUTRAL SURFACE & TEXT COLORS (WCAG AA+ Accessible Contrast)
+   * -------------------------------------------------------------------------- */
+  --color-bg-app: #f8fafc;           /* Main application canvas background */
+  --color-bg-surface: #ffffff;       /* Card, modal, and timetable grid background */
+  --color-bg-muted: #f1f5f9;         /* Table headers and disabled inputs */
+
+  --color-text-main: #0f172a;        /* Primary body copy and headings */
+  --color-text-muted: #475569;       /* Subtitles, timestamps, helper text */
+  --color-text-inverse: #ffffff;     /* Text on dark/primary buttons */
+
+  --color-border: #e2e8f0;           /* Subtle 1px dividers and grid lines */
+  --color-border-strong: #cbd5e1;    /* Input borders and active outlines */
+
+  /* --------------------------------------------------------------------------
+   * 4. TYPOGRAPHY SCALE
+   * Clean geometric sans-serif stack optimized for dense timetable legibility.
+   * -------------------------------------------------------------------------- */
+  --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', monospace; /* For time intervals & group codes */
+
+  --font-size-xs: 0.75rem;           /* 12px - Badges, grid time markers */
+  --font-size-sm: 0.875rem;          /* 14px - Form labels, table cells */
+  --font-size-base: 1rem;            /* 16px - Standard body text */
+  --font-size-lg: 1.125rem;          /* 18px - Card titles */
+  --font-size-xl: 1.5rem;            /* 24px - Section headers */
+  --font-size-2xl: 1.875rem;         /* 30px - Page hero titles */
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* --------------------------------------------------------------------------
+   * 5. SPACING, RADII & ELEVATION (8pt Grid System)
+   * -------------------------------------------------------------------------- */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+
+  --radius-sm: 6px;    /* Inputs, small badges */
+  --radius-md: 10px;   /* Standard cards, buttons */
+  --radius-lg: 16px;   /* Modals, main containers */
+  --radius-full: 9999px; /* Pill badges, avatars */
+
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.10);
+
+  /* --------------------------------------------------------------------------
+   * 6. LAYOUT & TRANSITIONS
+   * -------------------------------------------------------------------------- */
+  --container-max: 1200px;
+  --navbar-height: 64px;
+  --transition-fast: 150ms ease-in-out;
+}
