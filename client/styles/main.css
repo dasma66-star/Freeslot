@@ -1,0 +1,416 @@
+/**
+ * ============================================================================
+ * FREESLOT — CORE COMPONENT & RESPONSIVE STYLES (main.css)
+ * ============================================================================
+ * Role: UI/UX Designer
+ * Purpose: Implements layout structure, responsive breakpoints (Mobile, Tablet,
+ *          Desktop), and reusable UI components (Timetable Grid, Slot Card,
+ *          Group Card, Forms, Navigation) using variables from variables.css.
+ * ============================================================================
+ */
+
+@import url('./variables.css');
+
+/* --------------------------------------------------------------------------
+ * 1. GLOBAL RESET & BASE STYLES
+ * -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  color: var(--color-text-main);
+  background-color: var(--color-bg-app);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --------------------------------------------------------------------------
+ * 2. TOP NAVIGATION BAR (Responsive Flex Layout)
+ * -------------------------------------------------------------------------- */
+.navbar {
+  background-color: var(--color-secondary);
+  color: var(--color-text-inverse);
+  height: var(--navbar-height);
+  padding: 0 var(--space-4);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-md);
+}
+
+.navbar-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.02em;
+}
+
+.brand-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-accent-free);
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.nav-btn:hover {
+  color: var(--color-text-inverse);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.nav-btn.active {
+  color: var(--color-text-inverse);
+  background-color: var(--color-primary);
+}
+
+/* --------------------------------------------------------------------------
+ * 3. MAIN PAGE CONTAINER & GRID SYSTEM
+ * -------------------------------------------------------------------------- */
+.app-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+}
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.page-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-main);
+}
+
+.page-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+/* 2-Column Dashboard Grid (Desktop) -> Stacks on Tablet/Mobile */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 960px) {
+  .dashboard-grid {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
+ * 4. REUSABLE CARDS & BUTTONS
+ * -------------------------------------------------------------------------- */
+.card {
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.card-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-success {
+  background-color: var(--color-accent-free);
+  color: var(--color-text-inverse);
+}
+
+.btn-success:hover {
+  background-color: var(--color-success);
+}
+
+.btn-outline {
+  background-color: var(--color-bg-surface);
+  border-color: var(--color-border-strong);
+  color: var(--color-text-main);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-bg-muted);
+}
+
+/* --------------------------------------------------------------------------
+ * 5. WEEKLY TIMETABLE GRID COMPONENT
+ * Horizontal scroll wrapper ensures mobile usability without squishing text.
+ * -------------------------------------------------------------------------- */
+.timetable-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.timetable-grid {
+  display: grid;
+  grid-template-columns: 80px repeat(5, minmax(130px, 1fr));
+  min-width: 730px;
+  background-color: var(--color-bg-surface);
+}
+
+.grid-header {
+  background-color: var(--color-bg-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  padding: var(--space-3) var(--space-2);
+  text-align: center;
+  border-bottom: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+}
+
+.time-label {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  padding: var(--space-3) var(--space-2);
+  text-align: right;
+  border-bottom: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+  background-color: var(--color-bg-app);
+}
+
+.grid-cell {
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+  min-height: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Schedule Block Types inside Timetable */
+.slot-block {
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.slot-block.busy {
+  background-color: var(--color-busy-bg);
+  border-left: 3px solid var(--color-busy-border);
+  color: var(--color-busy-text);
+}
+
+.slot-block.free {
+  background-color: var(--color-accent-free-bg);
+  border-left: 3px solid var(--color-accent-free);
+  color: #065f46;
+}
+
+.slot-block.meeting {
+  background-color: var(--color-meeting-bg);
+  border-left: 3px solid var(--color-meeting-border);
+  color: var(--color-meeting-text);
+}
+
+/* --------------------------------------------------------------------------
+ * 6. MUTUAL FREE-SLOT CARDS & GROUP CARDS
+ * -------------------------------------------------------------------------- */
+.slot-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.free-slot-card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background-color: var(--color-accent-free-bg);
+  border: 1px solid var(--color-accent-free-border);
+  border-radius: var(--radius-md);
+}
+
+.slot-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.slot-day {
+  font-weight: var(--font-weight-bold);
+  color: #064e3b;
+}
+
+.slot-time {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  color: #047857;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-full);
+}
+
+.badge-free {
+  background-color: var(--color-accent-free);
+  color: var(--color-text-inverse);
+}
+
+.badge-code {
+  font-family: var(--font-family-mono);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  border: 1px solid #bfdbfe;
+}
+
+/* --------------------------------------------------------------------------
+ * 7. FORM CONTROLS (Timetable Entry & Group Join/Create)
+ * -------------------------------------------------------------------------- */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .form-grid-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.form-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-main);
+}
+
+.form-control {
+  padding: var(--space-2) var(--space-3);
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-main);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  transition: var(--transition-fast);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* --------------------------------------------------------------------------
+ * 8. ACCESSIBILITY & UTILITY CLASSES
+ * -------------------------------------------------------------------------- */
+.hidden {
+  display: none !important;
+}
+
+.legend-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.legend-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}

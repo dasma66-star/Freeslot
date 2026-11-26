@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FreeSlot — Interactive UI/UX Prototype</title>
+    <!-- Links directly to the UI/UX Design System stylesheets -->
+    <link rel="stylesheet" href="../client/styles/main.css" />
+  </head>
+  <body>
+    <!-- ========================================================================
+       NAVIGATION HEADER
+       Allows switching between the 3 core user flows defined in the proposal.
+       ======================================================================== -->
+    <header class="navbar">
+      <div class="navbar-inner">
+        <div class="brand-logo">
+          <span class="brand-dot" aria-hidden="true"></span>
+          <span>FreeSlot</span>
+        </div>
+        <nav class="nav-links" aria-label="Main Navigation">
+          <button
+            class="nav-btn active"
+            onclick="switchView('dashboard', this)"
+          >
+            Dashboard
+          </button>
+          <button class="nav-btn" onclick="switchView('timetable', this)">
+            My Timetable
+          </button>
+          <button class="nav-btn" onclick="switchView('groups', this)">
+            Group Scheduler
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="app-container">
+      <!-- ======================================================================
+         SCREEN 1: PERSONAL DASHBOARD
+         Displays weekly schedule overview, status legend, and upcoming meetings.
+         ====================================================================== -->
+      <section id="view-dashboard" class="view-section">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Welcome back, Student</h1>
+            <p class="page-subtitle">
+              Your weekly academic schedule and confirmed group study sessions.
+            </p>
+          </div>
+          <button
+            class="btn btn-primary"
+            onclick="
+              switchView('timetable', document.querySelectorAll('.nav-btn')[1])
+            "
+          >
+            + Add Busy Slot
+          </button>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Left Column: Weekly Timetable Grid -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Weekly Timetable Overview</h2>
+              <span class="badge badge-code">Semester 1</span>
+            </div>
+
+            <!-- Color Coding Legend for Immediate Visual Scanning -->
+            <div class="legend-bar">
+              <div class="legend-item">
+                <span
+                  class="legend-swatch"
+                  style="
+                    background: var(--color-busy-bg);
+                    border: 1px solid var(--color-busy-border);
+                  "
+                ></span>
+                <span>Lecture / Lab (Busy)</span>
+              </div>
+              <div class="legend-item">
+                <span
+                  class="legend-swatch"
+                  style="
+                    background: var(--color-accent-free-bg);
+                    border: 1px solid var(--color-accent-free);
+                  "
+                ></span>
+                <span>Open Free Period</span>
+              </div>
+              <div class="legend-item">
+                <span
+                  class="legend-swatch"
+                  style="
+                    background: var(--color-meeting-bg);
+                    border: 1px solid var(--color-meeting-border);
+                  "
+                ></span>
+                <span>Confirmed Group Meeting</span>
+              </div>
+            </div>
+
+            <div class="timetable-wrapper">
+              <div class="timetable-grid">
+                <!-- Table Header Row -->
+                <div class="grid-header">Time</div>
+                <div class="grid-header">Mon</div>
+                <div class="grid-header">Tue</div>
+                <div class="grid-header">Wed</div>
+                <div class="grid-header">Thu</div>
+                <div class="grid-header">Fri</div>
+
+                <!-- 08:00 - 10:00 Row -->
+                <div class="time-label">08:00</div>
+                <div class="grid-cell">
+                  <div class="slot-block busy">CSM 351 Lecture</div>
+                </div>
+                <div class="grid-cell">
+                  <div class="slot-block free">Free</div>
+                </div>
+                <div class="grid-cell">
+                  <div class="slot-block busy">CSM 353 Lab</div>
+                </div>
+                <div class="grid-cell">
+                  <div class="slot-block free">Free</div>
+                </div>
+                <div class="grid-cell">
+                  <div class="slot-block busy">MATH 351</div>
+                </div>
+
+                <!-- 10:00 - 12:00 Row -->
+                <div class="time-label">10:00</div>
+                <div class="grid-cell">
+                  <div class="slot-block free">Free</div>
+                </div>
+                <div class="grid-cell">
+                  <div class="slot-block busy">CSM 355 Lecture</div>
+                </div>
+                <div class="grid-cell">
+                  <div class="slot-block meeting">Group 4 Sync</div>
+                </div>
+                <div class="grid-cell">
+                  <div class="slot-block busy">CSM 357</div>
+                </div>
+                <div class="grid-cell">
+                  <div class="slot-block free">Free</div>
+                </div>
+
+                <!-- 14:00 - 16:00 Row -->
+                <div class="time-label">14:00</div>
+                <div class="grid-cell">
+                  <div class="slot-block busy">Tutorial</div>
+                </div>
+                <div class="grid-cell">
+                  <div class="slot-block free">Free</div>
+                </div>
+                <div class="grid-cell">
+                  <div class="slot-block free">Free</div>
+                </div>
+                <div class="grid-cell">
+                  <div class="slot-block free">Free</div>
+                </div>
+                <div class="grid-cell">
+                  <div class="slot-block busy">Seminar</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Upcoming Confirmed Meetings -->
+          <aside class="card">
+            <div class="card-header">
+              <h2 class="card-title">Upcoming Meetings</h2>
+            </div>
+            <div class="slot-list" id="confirmed-meetings-list">
+              <div class="slot-block meeting" style="padding: var(--space-4)">
+                <strong>Software Engineering Group 4</strong>
+                <p style="margin-top: 4px">
+                  Wednesday • 10:00 – 11:30 (90 mins)
+                </p>
+                <small>Location: Library Study Room B</small>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+         SCREEN 2: USER FLOW 1 — TIMETABLE ENTRY FORM
+         Captures Day, Start Time, End Time (converted to minutes since midnight
+         in JS by the front-end/back-end teams).
+         ====================================================================== -->
+      <section id="view-timetable" class="view-section hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Manage Weekly Timetable</h1>
+            <p class="page-subtitle">
+              Add your lectures, labs, and tutorials so FreeSlot knows when you
+              are busy.
+            </p>
+          </div>
+        </div>
+
+        <div class="card" style="max-width: 640px">
+          <div class="card-header">
+            <h2 class="card-title">Add Schedule Activity</h2>
+          </div>
+
+          <form
+            id="timetable-form"
+            class="form-grid"
+            onsubmit="handleAddSlot(event)"
+          >
+            <div class="form-group">
+              <label class="form-label" for="activity-title"
+                >Course / Activity Name</label
+              >
+              <input
+                class="form-control"
+                id="activity-title"
+                type="text"
+                placeholder="e.g., CSM 351 Software Engineering"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="activity-day">Day of Week</label>
+              <select class="form-control" id="activity-day" required>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+              </select>
+            </div>
+
+            <div class="form-grid form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="start-time">Start Time</label>
+                <input
+                  class="form-control"
+                  id="start-time"
+                  type="time"
+                  value="08:00"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="end-time">End Time</label>
+                <input
+                  class="form-control"
+                  id="end-time"
+                  type="time"
+                  value="10:00"
+                  required
+                />
+              </div>
+            </div>
+
+            <div
+              style="
+                display: flex;
+                gap: var(--space-3);
+                margin-top: var(--space-2);
+              "
+            >
+              <button type="submit" class="btn btn-primary">
+                Save to Timetable
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline"
+                onclick="
+                  switchView(
+                    'dashboard',
+                    document.querySelectorAll('.nav-btn')[0],
+                  )
+                "
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+
+          <div
+            id="timetable-feedback"
+            class="slot-block free hidden"
+            style="margin-top: var(--space-4)"
+          ></div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+         SCREEN 3: USER FLOW 2 & 3 — GROUP CREATION & AUTOMATIC FREE-SLOT FINDER
+         Allows joining/creating a group, filtering by meeting duration, and
+         confirming a mutually available slot.
+         ====================================================================== -->
+      <section id="view-groups" class="view-section hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Group Meeting Finder</h1>
+            <p class="page-subtitle">
+              Compare all group members' schedules and confirm a common free
+              slot.
+            </p>
+          </div>
+          <span
+            class="badge badge-code"
+            style="font-size: var(--font-size-sm); padding: 6px 12px"
+          >
+            Invite Code: KNUST-CS04
+          </span>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Left Column: Duration Filter & Suggested Mutual Free Slots -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Detected Mutual Free Slots</h2>
+              <div
+                style="display: flex; align-items: center; gap: var(--space-2)"
+              >
+                <label class="form-label" for="duration-filter"
+                  >Min Duration:</label
+                >
+                <select
+                  class="form-control"
+                  id="duration-filter"
+                  onchange="filterSlots()"
+                >
+                  <option value="30">30 mins</option>
+                  <option value="60" selected>1 hour (60m)</option>
+                  <option value="120">2 hours (120m)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="slot-list" id="mutual-slots-container">
+              <!-- Slot Card 1 -->
+              <div class="free-slot-card" data-duration="120">
+                <div class="slot-meta">
+                  <span class="slot-day"
+                    >Tuesday
+                    <span class="badge badge-free"
+                      >100% Available (5/5)</span
+                    ></span
+                  >
+                  <span class="slot-time">14:00 – 16:00 (120 mins)</span>
+                </div>
+                <button
+                  class="btn btn-success"
+                  onclick="confirmMeeting('Tuesday', '14:00 – 16:00')"
+                >
+                  Confirm Slot
+                </button>
+              </div>
+
+              <!-- Slot Card 2 -->
+              <div class="free-slot-card" data-duration="90">
+                <div class="slot-meta">
+                  <span class="slot-day"
+                    >Thursday
+                    <span class="badge badge-free"
+                      >100% Available (5/5)</span
+                    ></span
+                  >
+                  <span class="slot-time">14:30 – 16:00 (90 mins)</span>
+                </div>
+                <button
+                  class="btn btn-success"
+                  onclick="confirmMeeting('Thursday', '14:30 – 16:00')"
+                >
+                  Confirm Slot
+                </button>
+              </div>
+
+              <!-- Slot Card 3 -->
+              <div class="free-slot-card" data-duration="60">
+                <div class="slot-meta">
+                  <span class="slot-day"
+                    >Friday
+                    <span class="badge badge-free"
+                      >100% Available (5/5)</span
+                    ></span
+                  >
+                  <span class="slot-time">10:00 – 11:00 (60 mins)</span>
+                </div>
+                <button
+                  class="btn btn-success"
+                  onclick="confirmMeeting('Friday', '10:00 – 11:00')"
+                >
+                  Confirm Slot
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Group Members & Join Box -->
+          <aside class="card">
+            <div class="card-header">
+              <h2 class="card-title">Group Members (5)</h2>
+            </div>
+            <ul
+              style="
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-2);
+                margin-bottom: var(--space-6);
+                font-size: var(--font-size-sm);
+              "
+            >
+              <li>• Daniel Kwaku Mensah Sie (Synced)</li>
+              <li>• Eugene Junior Gyabaah (Synced)</li>
+              <li>• Nana Ofori Agyemang Marfo (Synced)</li>
+              <li>• Sylvester Abban-Otoo (Synced)</li>
+              <li>• James Opoku (Synced)</li>
+            </ul>
+
+            <hr
+              style="
+                border: 0;
+                border-top: 1px solid var(--color-border);
+                margin-bottom: var(--space-4);
+              "
+            />
+
+            <div class="form-group">
+              <label class="form-label" for="join-code"
+                >Join Another Group</label
+              >
+              <div style="display: flex; gap: var(--space-2)">
+                <input
+                  class="form-control"
+                  id="join-code"
+                  type="text"
+                  placeholder="Enter invite code"
+                />
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                  onclick="alert('Joined group successfully!')"
+                >
+                  Join
+                </button>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <!-- ========================================================================
+       PROTOTYPE INTERACTIVITY SCRIPT
+       Demonstrates client-side UX transitions and time-to-minutes conversion
+       matching the technical architecture document.
+       ======================================================================== -->
+    <script>
+      /**
+       * Switches visible screen sections and updates active navbar state.
+       */
+      function switchView(viewId, activeBtn) {
+        document
+          .querySelectorAll(".view-section")
+          .forEach((sec) => sec.classList.add("hidden"));
+        document.getElementById("view-" + viewId).classList.remove("hidden");
+
+        document
+          .querySelectorAll(".nav-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        if (activeBtn) activeBtn.classList.add("active");
+      }
+
+      /**
+       * Converts HH:MM string to minutes since midnight (e.g., "09:30" -> 570)
+       * as specified in FreeSlot Tech Stack & Rationale.
+       */
+      function toMinutesSinceMidnight(timeStr) {
+        const [hours, minutes] = timeStr.split(":").map(Number);
+        return hours * 60 + minutes;
+      }
+
+      /**
+       * Validates and previews adding a busy timetable block.
+       */
+      function handleAddSlot(event) {
+        event.preventDefault();
+        const title = document.getElementById("activity-title").value.trim();
+        const day = document.getElementById("activity-day").value;
+        const start = document.getElementById("start-time").value;
+        const end = document.getElementById("end-time").value;
+
+        const startMins = toMinutesSinceMidnight(start);
+        const endMins = toMinutesSinceMidnight(end);
+        const feedback = document.getElementById("timetable-feedback");
+
+        if (endMins <= startMins) {
+          feedback.className = "slot-block busy";
+          feedback.textContent =
+            "Error: End time must be later than start time.";
+          feedback.classList.remove("hidden");
+          return;
+        }
+
+        feedback.className = "slot-block free";
+        feedback.textContent = `Saved "${title}" on ${day} (${start} – ${end} | ${startMins} to ${endMins} mins).`;
+        feedback.classList.remove("hidden");
+      }
+
+      /**
+       * Filters mutual free slots based on selected minimum meeting duration.
+       */
+      function filterSlots() {
+        const minDuration = Number(
+          document.getElementById("duration-filter").value,
+        );
+        document
+          .querySelectorAll("#mutual-slots-container .free-slot-card")
+          .forEach((card) => {
+            const slotDuration = Number(card.getAttribute("data-duration"));
+            card.classList.toggle("hidden", slotDuration < minDuration);
+          });
+      }
+
+      /**
+       * Confirms a mutual slot and adds it to the Personal Dashboard's upcoming meetings.
+       */
+      function confirmMeeting(day, timeRange) {
+        const list = document.getElementById("confirmed-meetings-list");
+        const item = document.createElement("div");
+        item.className = "slot-block meeting";
+        item.style.padding = "var(--space-4)";
+        item.innerHTML = `<strong>Project Group Sync (Confirmed)</strong><p style="margin-top:4px;">${day} • ${timeRange}</p>`;
+        list.appendChild(item);
+
+        alert(
+          `Meeting confirmed for ${day} (${timeRange})! Added to your Dashboard.`,
+        );
+        switchView("dashboard", document.querySelectorAll(".nav-btn")[0]);
+      }
+    </script>
+  </body>
+</html>
